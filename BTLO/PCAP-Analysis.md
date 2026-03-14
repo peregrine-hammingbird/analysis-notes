@@ -55,16 +55,6 @@ The malware was identified as **TeslaCrypt ransomware**.
 
 ### 4. Encrypted File Analysis
 
-A file named:
-The hash was searched in VirusTotal.
-
-Result:  
-The malware was identified as **TeslaCrypt ransomware**.
-
----
-
-### 4. Encrypted File Analysis
-
 A file named: Tender.pdf.micro
 
 was identified as an encrypted file created by the ransomware.
