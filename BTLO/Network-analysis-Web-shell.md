@@ -35,6 +35,29 @@ Activity: Webシェルを起点としたリバースシェルの実行。
 
 Connection: 攻撃者の制御端末とターゲットサーバー間で、特定ポート（Port: [Number]）を介した双方向通信の成立を確認。
 
+sequenceDiagram
+    participant A as Attacker (Source IP)
+    participant S as Web Server (Target IP)
+    participant C2 as C2 Framework / Listener
+
+    Note over A,S: Phase 1: Reconnaissance
+    A->>S: TCP SYN Scan (Port 1-1024)
+    S-->>A: SYN/ACK (Port 80/443 Open)
+    A->>S: HTTP Enumeration (User-Agent: Tool Detected)
+
+    Note over A,S: Phase 2: Exploitation & Delivery
+    A->>S: POST /upload.php (Malicious Payload)
+    S-->>A: 200 OK (File Saved to /uploads/)
+
+    Note over A,S: Phase 3: Installation & Execution
+    A->>S: GET /uploads/shell.php?cmd=whoami
+    S-->>A: RCE Result (uid=0... etc)
+
+    Note over A,C2: Phase 4: Command & Control
+    A->>S: Execute Reverse Shell Command
+    S->>C2: Established Connection (Port: [Number])
+    Note right of C2: Full Interactive Access Gained
+
 ---
 
 ## 3. Risk Assessment & Mapping
