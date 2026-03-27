@@ -14,6 +14,34 @@
     *   **Subject:** [Challengeでの件名を入力]
     *   **Source IP:** [特定したIPを入力]
     *   **Reverse DNS:** 送信元IPの逆DNS解決を実施し、攻撃者が利用したホスト名を確認。
+ 
+sequenceDiagram
+
+    participant A as Attacker (External IP)
+    participant U as Target User (Employee)
+    participant S as Phishing Site (Hosted Service)
+    participant SOC as SOC / Analyst (Sakata)
+
+    Note over A,U: Phase 1: Delivery
+    A->>U: Send Phishing Email (.eml)
+    Note right of U: Subject: [Insert Subject]
+
+    Note over U,S: Phase 2: User Interaction
+    U->>U: Open Email & View Content
+    U->>S: Click Malicious URL / Open Attachment
+    S-->>U: Display Fake Login Header (URL2PNG Analysis)
+
+    Note over U,SOC: Phase 3: Detection & Analysis
+    U->>SOC: Report Suspicious Email (Optional)
+    SOC->>SOC: Header Analysis (MousePad/Thunderbird)
+    SOC->>A: Reverse DNS Lookup (Whois.DomainTools)
+    SOC->>S: Investigate Hosting Infrastructure
+
+    Note over SOC,U: Phase 4: Incident Response
+    SOC->>U: Force Reset Credentials
+    SOC->>U: Isolate Host (Prevent Lateral Movement)
+    Note left of SOC: True Positive Confirmed
+
 
 ### Phase 2: Artifact & URL Analysis
 メール本文および添付ファイルに含まれる悪意のある要素を調査。
