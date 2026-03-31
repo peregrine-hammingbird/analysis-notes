@@ -59,3 +59,14 @@ graph TD
     style I fill:#f96,stroke:#333,stroke-width:2px
     style F fill:#f96,stroke:#333,stroke-width:2px
 ```
+
+---
+
+## 5. SOC Perspective & Recommendations
+今回の2事案は、ソーシャルエンジニアリングを起点とした多段階攻撃の典型例である。
+
+Endpoint Strategy: パッケージマネージャーの異常な親プロセス（Webサーバ等）からの実行や、
+システムログ（/var/log/yum.log等）の削除挙動をSIEMで検知対象とする。
+
+Intelligence Strategy: フィッシングサイトに関連付けられたSNSアカウント等のOSINT情報をブラックリストへ反映し、
+相関分析に活用する。
